@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="loginStyles.css">
+</head>
+<body>
+    <div class="login-container">
+
+        <img src= "/assets/img/logo.png" alt="NovaPlay Logo" class="login-logo"/>
+
+        <h2>Iniciar Sesión</h2>
+        <form id="loginForm">
+            <div class="input-group">
+                <label class="form-label" for="username">Usuario</label>
+                <input class="form-control" type="text" id="username" required>
+            </div>
+            <div class="input-group">
+                <label class="form-label" for="password">Contraseña</label>
+                <input class="form-control" type="password" id="password" required>
+            </div>
+            <button type="submit" class="mb-5">Entrar</button>
+            <br/><br/>
+            <a href="/login/register.html">Registrate aquí</a>
+        </form>
+    </div>
+
+    <script>
+        // Capturamos el formulario de login
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Obtenemos los valores del formulario
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Obtenemos los usuarios guardados en LocalStorage
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+
+            // Buscamos si las credenciales coinciden con algún usuario registrado
+            const user = users.find(user => user.username === username && user.password === password);
+
+            if (user) {
+                // Si las credenciales coinciden, iniciamos sesión
+                localStorage.setItem('loggedIn', 'true');
+                // Redirigimos al index.html
+                window.location.href = '../index.html';
+            } else {
+                alert('Usuario o contraseña incorrectos');
+            }
+        });
+    </script>
+</body>
+</html>
